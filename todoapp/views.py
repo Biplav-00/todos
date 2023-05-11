@@ -36,6 +36,7 @@ class index(View):
     
     def get(self,request):
         all_tasks = Task.objects.all().order_by('-date')
+        form = TaskForm()
         count_task=all_tasks.count()
         completed_todo = all_tasks.filter(complete=True).count()
         uncomplete_todo = count_task - completed_todo 
@@ -44,6 +45,7 @@ class index(View):
             'count_task':count_task,
             'completed_todo':completed_todo,
             'uncomplete_todo':uncomplete_todo,
+            'form':form,
         }
         return render(request,'todo/index.html',context)
 
@@ -80,9 +82,10 @@ class update(View):
     
     def get(self,request,pk):
         current_todo= Task.objects.get(id=pk)
-        
+        form = updateTaskForm(instance=current_todo)
         context={
             'current_todo':current_todo,
+            'form':form,
         }
         return render(request,'todo/update.html',context)
     
@@ -96,6 +99,7 @@ class update(View):
         form=updateTaskForm(instance=current_todo)
         context={
             'form' :form,
+            'current_todo':current_todo,
         }
         return render(request,'todo/update.html',context)
 
@@ -112,7 +116,7 @@ class deleteTodo(View):
     def get(self,request,pk):
         selected_todo = Task.objects.get(pk=pk)
         context={
-         'selected_todo)':selected_todo
+         'selected_todo':selected_todo
         }
         return render(request,'todo/delete.html',context)
      

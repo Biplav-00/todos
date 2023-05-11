@@ -23,8 +23,8 @@
                 {% endif %}
             </div>
             <div class="col-md-4">
-                <a class="btn btn-sm btn-warning" href="{%url 'todo-update' allList.id%} ">Edit</a>
-                <a  class="btn btn-sm btn-danger " href="{%url 'delete' allList.id%}">Delete</a>
+                <a class="btn btn-sm btn-warning" href="{% url 'todo-update' allList.id %} ">Edit</a>
+                <a  class="btn btn-sm btn-danger " href="{% url 'delete' allList.id %}">Delete</a>
             </div>
         </div>
 
