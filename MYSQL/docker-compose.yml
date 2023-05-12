@@ -1,0 +1,20 @@
+version: '3'
+services:
+  db:
+    image: mysql:8
+    environment:
+       MYSQL_ROOT_PASSWORD: pass
+       MYSQL_DATABASE: todo_db
+    volumes: 
+     - ./mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment: 
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ROOT_PASSWORD: pass
+    ports:
+      - "8080:80"

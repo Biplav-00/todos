@@ -78,12 +78,26 @@ WSGI_APPLICATION = 'Todoproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#this is inbuild sqlite3 database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+#This code is for the datase connectivity for mysql 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'todo_db',
+        'USER': 'root',
+        'PASSWORD':'pass',
+        'HOST': '127.0.0.1',
+        'PORT':'3306',
+
     }
-}
+    }
 
 
 # Password validation
