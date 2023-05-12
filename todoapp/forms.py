@@ -15,5 +15,11 @@ class updateTaskForm(forms.ModelForm):
         model = Task
         fields =['content','complete']
         
+        
+class DisplayAllTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['content','complete']
+        
     
     
