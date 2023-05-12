@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse,HttpResponseBadRequest
 from .models import Task
@@ -7,7 +8,8 @@ from .forms import TaskForm,updateTaskForm
 
 #these belows code are for the genreic views
 from django.views import View
-from django.views.generic import ListView,UpdateView
+from django.views.generic import ListView,UpdateView,DetailView
+from django.views.generic.edit import CreateView,FormMixin
 
 
 # Create your views here.
@@ -65,9 +67,24 @@ from django.views.generic import ListView,UpdateView
 #             'form':form,
 #         }
 #         return render(request,'todo/index.html',context)
+
+
+class addTask(FormMixin,ListView):
+    model = Task
+    form_class = TaskForm
+    template_name= 'todo/add_task.html'
+    context_object_name = 'task_data'
+    
+    def post(self,request,*args,**kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+
+
         
  #This class is a generic classs and it has the limited or short code as compare to above class
- 
 class index(ListView):
     model = Task
     # By default the index class return the object_list of model but we can set the naming convention manually
@@ -80,7 +97,7 @@ class index(ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         all_tasks = Task.objects.all().order_by('-date')
-        form = TaskForm()
+       # form = TaskForm()
         count_task=all_tasks.count()
         completed_todo = all_tasks.filter(complete=True).count()
         uncomplete_todo = count_task - completed_todo 
@@ -88,9 +105,24 @@ class index(ListView):
         context['count_task']=count_task
         context['completed_todo']=completed_todo
         context['uncomplete_todo']=uncomplete_todo
-        context['form']=form
+        #context['form']=form
         return context
-        
+    
+    
+            
+class singleView(DetailView):
+    model = Task
+    template_name = 'todo/single_view.html'
+    def get_context_data(self,**kwargs):
+        context =super().get_context_data(**kwargs)
+        form = updateTaskForm(instance=self.object)
+        for field in form.fields:
+            form.fields[field].disabled = True  
+        context['form'] = form 
+        return context 
+     
+     
+     #this class is used to handle the single view object   
 
 #this function is used to create the update view
 # def update(request,pk):

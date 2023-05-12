@@ -4,11 +4,11 @@
 {% block content %}
 <div class="border pt-3">
     
-    <form method="POST" class="p-3">
+    <!-- <form method="POST" class="p-3">
         {% csrf_token %}
         {{ form|crispy }}
         <input class="btn btn-block btn-success" type="submit" value="submit">
-    </form>
+    </form> -->
     <hr>
 
     <!-- for allList in all_tasks  -->
@@ -24,7 +24,8 @@
                 {% endif %}
             </div>
             <div class="col-md-4">
-                <a class="btn btn-sm btn-warning" href="{% url 'todo-update' allList.id %} ">Edit</a>
+                <a class="m-1" href="{% url 'view' allList.id %}"><i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #3584e4;"></i></a>
+                <a class="btn btn-sm btn-warning" href="{% url 'update' allList.id %} ">Edit</a>
                 <a  class="btn btn-sm btn-danger " href="{% url 'delete' allList.id %}">Delete</a>
             </div>
         </div>

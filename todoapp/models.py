@@ -11,5 +11,6 @@ class Task(models.Model):
     def __str__(self):
         return self.content
     
-    class Meta:
-        db_table='todoapp_task'
+    # class Meta:
+    #     db_table = 'todoapp_task'    
+   
